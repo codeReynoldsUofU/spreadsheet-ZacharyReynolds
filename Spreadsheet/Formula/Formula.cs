@@ -1,6 +1,6 @@
 ﻿namespace Formula;
 
-public class Class1
+public class Formula
 {
     
 }
