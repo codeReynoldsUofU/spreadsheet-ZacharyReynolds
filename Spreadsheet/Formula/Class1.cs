@@ -1,3 +1,7 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿namespace Formula;
 
-Console.WriteLine("Hello, World!");
+public class Class1
+{
+    
+}
+    
