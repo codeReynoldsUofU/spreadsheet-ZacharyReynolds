@@ -1,6 +1,4 @@
-/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/bin/Debug/net10.0/Formula
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/bin/Debug/net10.0/Formula.deps.json
-/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/bin/Debug/net10.0/Formula.runtimeconfig.json
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/bin/Debug/net10.0/Formula.dll
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/bin/Debug/net10.0/Formula.pdb
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.GeneratedMSBuildEditorConfig.editorconfig
@@ -10,6 +8,5 @@
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.dll
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/refint/Formula.dll
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.pdb
-/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.genruntimeconfig.cache
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/ref/Formula.dll
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.sourcelink.json

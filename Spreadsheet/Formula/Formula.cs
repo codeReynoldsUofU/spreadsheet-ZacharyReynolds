@@ -50,6 +50,11 @@ public class Formula
     /// </summary>
     private const string VariableRegExPattern = @"[a-zA-Z]+\d+";
 
+    private const string FirstTokenRegExPattern = @"\(|[0-9]+|[a-zA-Z]+\d+";
+    
+    private const string LastTokenRegExPattern = @"\)|[0-9]+|[a-zA-Z]+\d+";
+    
+    private const string OperatorRegExPattern = @"[\+\-*/]";
     /// <summary>
     ///   Initializes a new instance of the <see cref="Formula"/> class.
     ///   <para>
@@ -79,7 +84,19 @@ public class Formula
     /// <param name="formula"> The string representation of the formula to be created.</param>
     public Formula( string formula )
     {
-        // FIXME: implement your code here
+        if (formula == String.Empty) throw new FormulaFormatException( "Empty formula" );
+        
+        List<string> tokens = GetTokens( formula );
+
+        foreach (string token in tokens)
+        {
+            if (!IsValidToken(token))
+                throw new FormulaFormatException( $"Invalid token '{token}'" );
+        } 
+        if (!ParenthesesCheck( formula ))
+            throw new FormulaFormatException( $"Invalid Parentheses amount: '{formula}'" );
+        
+        
     }
 
     /// <summary>
@@ -157,6 +174,31 @@ public class Formula
     }
 
     /// <summary>
+    /// Checks if there is an equal number of opening and closing parentheses. Opening parentheses add 1
+    /// to the count and closing parentheses subtract 1.
+    /// </summary>
+    /// <param name="formula"></param>
+    /// <returns>true if the count is 0 and false otherwise</returns>
+    private static bool ParenthesesCheck(string formula)
+    {
+        List<string> paraCheck = GetTokens(formula);
+        int paraBalance = 0;
+        foreach ( string token in paraCheck )
+        {
+            if (Regex.IsMatch( token, @"\(" ) )
+                paraBalance++;
+            else if (Regex.IsMatch( token, @"\)" ))
+                paraBalance--;
+        }
+        return paraBalance == 0;
+    }
+
+    private static bool IsValidToken(string token)
+    {
+        return Regex.IsMatch( token, @"[0-9]+|[a-zA-Z]+\d+|[\+\-*/]|\(|\)" );
+    }
+
+    /// <summary>
     ///   <para>
     ///     Given an expression, enumerates the tokens that compose it.
     ///   </para>
@@ -228,4 +270,5 @@ public class FormulaFormatException : Exception
     {
         // All this does is call the base constructor. No extra code needed.
     }
+    
 }
