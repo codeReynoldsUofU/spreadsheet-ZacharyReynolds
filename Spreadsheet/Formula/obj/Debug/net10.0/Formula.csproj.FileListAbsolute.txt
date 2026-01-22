@@ -5,8 +5,8 @@
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.AssemblyInfoInputs.cache
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.AssemblyInfo.cs
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.csproj.CoreCompileInputs.cache
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.sourcelink.json
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.dll
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/refint/Formula.dll
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.pdb
 /Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/ref/Formula.dll
-/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Formula/obj/Debug/net10.0/Formula.sourcelink.json

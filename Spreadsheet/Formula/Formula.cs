@@ -50,13 +50,15 @@ public class Formula
     /// </summary>
     private const string VariableRegExPattern = @"[a-zA-Z]+\d+";
 
-    private const string FirstTokenRegExPattern = @"\(|[0-9]+|[a-zA-Z]+\d+";
+    private const string FirstTokenRegExPattern = @"\(|\d+|[a-zA-Z]+\d+|\d+[eE]?\d+";
     
-    private const string LastTokenRegExPattern = @"\)|[0-9]+|[a-zA-Z]+\d+";
+    private const string LastTokenRegExPattern = @"\)|[0-9]+|[a-zA-Z]+\d+|\d+[eE]?\d+";
     
-    private const string OperatorRegExPattern = @"[\+\-*/]";
+    private const string ExtraFollowingTokenRegExPattern = @"\)|\d+|\d+[eE]?\d+|[a-zA-Z]+\d+";
     
     private static List<string> _formulaTokens = [];
+    
+    private static int TokenCount => _formulaTokens.Count;
     
     private static string _formulaString = "";
     /// <summary>
@@ -167,7 +169,7 @@ public class Formula
         foreach (string token in _formulaTokens)
         {
             if (IsVar(token)) _formulaString += token.ToUpper();
-            else if (IsNumber(token)) _formulaString += Double.TryParse(token, out double resultNum);
+            else if (IsNumber(token)) _formulaString += token;
             else _formulaString += token;
         }
 
@@ -186,22 +188,11 @@ public class Formula
         string standaloneVarPattern = $"^{VariableRegExPattern}$";
         return Regex.IsMatch( token, standaloneVarPattern );
     }
-
-    /// <summary>
-    /// Checks that the symbol passed into the formula is a valid symbol for
-    /// an operator
-    /// </summary>
-    /// <param name="token"></param>
-    /// <returns>True if the symbol is a valid operator and false if not</returns>
-    /// TODO: Delete this after testing, unnecessary 
-    private static bool IsOperator(string token)
-    {
-        return Regex.IsMatch( token, OperatorRegExPattern );
-    }
+    
 
     private static bool IsNumber(string token)
     {
-        string numberPattern = $"[0.00-9.99]+";
+        string numberPattern = @"\d+|\d+[eE]?\d+";
         return Regex.IsMatch( token, numberPattern );
     }
 
@@ -224,62 +215,77 @@ public class Formula
         return paraBalance == 0;
     }
 
-    private static bool IsValidToken(string token)
+    private static bool IsValidToken(List<string> formula)
     {
-        return Regex.IsMatch( token, @"[0-9]+|[a-zA-Z]+\d+|[\+\-*/]|\(|\)" );
+        if (formula.Count == 1) 
+            SingleTokenValidity(formula[0]);
+        
+        if (!Regex.IsMatch(formula[0], FirstTokenRegExPattern))
+            throw new FormulaFormatException( $"Invalid first token" );
+        foreach (string token in formula)
+        { 
+            if (!Regex.IsMatch(token, @"[0-9]+|[a-zA-Z]+\d+|[\+\-*/]|\(|\)|\d+[eE]?\d+")) 
+                throw new FormulaFormatException($"Invalid token '{token}'");
+        }
+
+        return true;
     }
 
     private static bool IsValidParaOperFollowing(List<string> formula)
     {
+        if  (formula.Count == 1)
+            return SingleTokenValidity(formula[0]);
+        
         string lpPattern = @"\(";
         string rpPattern = @"\)";
         string opPattern = @"[\+\-*/]";
         
-        for (int i = 0; i < _formulaTokens.Count; i++)
+        for (int i = 0; i < _formulaTokens.Count - 1; i++)
         {
-            if (Regex.IsMatch(_formulaTokens[i], lpPattern) || Regex.IsMatch(_formulaTokens[i], opPattern))
-            {
+            if (Regex.IsMatch(_formulaTokens[i], lpPattern) )
                 if (Regex.IsMatch(_formulaTokens[i + 1], opPattern) || Regex.IsMatch(_formulaTokens[i + 1], rpPattern))
-                    throw new FormulaFormatException(
-                        $"Invalid Parantheses/Operator following");
-
-            }
+                    return true;
+            if (Regex.IsMatch(_formulaTokens[i], opPattern))
+                if (Regex.IsMatch(_formulaTokens[i + 1], lpPattern))
+                    return true;
         }
-        return true;
+        return false;
     }
 
     private static bool IsValidExtraFollowing(List<string> formula)
     {
+        if  (formula.Count == 1)
+            return SingleTokenValidity(formula[0]);
+        
         string rpPattern = @"\)";
         string opPattern = @"[\+\-*/]";
-        for (int i = 0; i < _formulaTokens.Count; i++)
+        for (int i = 0; i < _formulaTokens.Count - 1; i++)
         {
-            if (IsNumber(_formulaTokens[i]) || IsVar(_formulaTokens[i]) || Regex.IsMatch(_formulaTokens[i], rpPattern))
-            {
-                if (!Regex.IsMatch(_formulaTokens[i + 1], rpPattern) ||
-                        !Regex.IsMatch(_formulaTokens[i + 1], opPattern))
-                            throw new FormulaFormatException($"Invalid Extra following");
-            }
+            if (i < _formulaTokens.Count && Regex.IsMatch(_formulaTokens[i], ExtraFollowingTokenRegExPattern))
+                if (Regex.IsMatch(_formulaTokens[i + 1], rpPattern) ||
+                    Regex.IsMatch(_formulaTokens[i + 1], opPattern))
+                    return true;
+            
+            if (i ==  _formulaTokens.Count)
+                return Regex.IsMatch(_formulaTokens[i], LastTokenRegExPattern);
         }
-        return true;
+       return false;
+    }
+
+    private static bool SingleTokenValidity(string token)
+    {
+        return Regex.IsMatch(token, @"\d+|[a-zA-Z]+\d+|\d+[eE]?\d+");
     }
 
     private static void IsValidFormula(List<string> formula)
     {
        
         // Rule 2 Valid Tokens
-        foreach (string token in formula)
-            if (!IsValidToken(token)) throw new FormulaFormatException( $"Invalid token '{token}'" );
+        IsValidToken(formula);
         
         // Rule 3 & 4, Closing and Balanced Parentheses
         if (!ParenthesesCheck(formula))
             throw new FormulaFormatException( $"Invalid Parentheses amount" );
-        
-        // Rule 5 & 6, first and last token rules
-        if (!Regex.IsMatch( _formulaTokens[0], FirstTokenRegExPattern))
-            throw new FormulaFormatException( $"Invalid First token '{_formulaTokens[0]}'" );
-        if (!Regex.IsMatch( _formulaTokens[^1], LastTokenRegExPattern))
-            throw new FormulaFormatException( $"Invalid Last token '{_formulaTokens[^1]}'" );
         
         // Rule 7, Parentheses/Operator following
         if (!IsValidParaOperFollowing(formula)) 
@@ -289,6 +295,7 @@ public class Formula
         if (!IsValidExtraFollowing(formula))
             throw new FormulaFormatException( $"Invalid Extra following" );
         
+        if (!Regex.IsMatch(formula[^1], LastTokenRegExPattern)) throw new FormulaFormatException( $"Invalid last token" );
     }
     
 
