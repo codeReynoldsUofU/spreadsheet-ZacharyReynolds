@@ -179,26 +179,36 @@ public sealed class FormulaValidity
     
     // --- Tests for Extra Following Rule ---
     
-    // Test that expects formula exeption to be thrown because a number following a closing parenthesis
+    // Test that expects formula exception to be thrown because a number following a closing parenthesis
     // is not valid
     [TestMethod]
     public void FormulaConstructor_TestExtraFollowing_Invalid()
     {
         Assert.Throws<FormulaFormatException>(() => _ = new Formula( "(1 + 1)1" ) );
     }
-
+    
+    // Expects formula exception for having nothing within the parentheses
     [TestMethod]
     public void FormulaConstructor_TestExtraFollowingEmptyParentheses_Invalid()
     {
         Assert.Throws<FormulaFormatException>(() => _ = new Formula( "() + 1" ) );
     }
 
+    // Expects error for having a lone operator after parentheses
     [TestMethod]
     public void FormulaConstructor_TestExtraFollowingLoneOperatior_Invalid()
     {
         Assert.Throws<FormulaFormatException>(() => _ = new Formula( "(1 + 1)+" ) );
     }
 
+    // Expects error if parenthesis are back to back with no operator between them
+    [TestMethod]
+    public void FormulaConstructor_TestExtraFollowingMultiplyingParentheses_Invalid()
+    {
+        Assert.Throws<FormulaFormatException>(() => _ = new Formula( "(1 + 1)(1 + 1)" ) );
+    }
+
+    // Tests ToString method to represent formula in canonical form
     [TestMethod]
     public void ToString_Valid()
     {
@@ -206,6 +216,7 @@ public sealed class FormulaValidity
        Assert.AreEqual( "1A2+2*3000000", _.ToString( ) );
     }
 
+    // Tests GetVariables method to ensure variables are contained in a hash set
     [TestMethod]
     public void GetVariables_Valid()
     {
@@ -214,6 +225,7 @@ public sealed class FormulaValidity
         Assert.AreEqual(_.ToString(), testVariables.GetVariables().ToString( ) );
     }
 
+    // Tests GetVariables method to show that the hash set does not store duplicates
     [TestMethod]
     public void GetVariablesWithDuplicates_Valid()
     {

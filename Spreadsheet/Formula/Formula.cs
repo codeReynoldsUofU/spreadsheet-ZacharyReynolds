@@ -194,8 +194,8 @@ public class Formula
     /// Checks if there is an equal number of opening and closing parentheses. Opening parentheses add 1
     /// to the count and closing parentheses subtract 1.
     /// </summary>
-    /// <param name="formula"></param>
-    /// <returns>true if the count is 0 and false otherwise</returns>
+    /// <param name="formula">List of tokens</param>
+    /// <returns>True if the count is 0 and false otherwise</returns>
     private static bool ParenthesesCheck(List<string> formula)
     {
         int paraBalance = 0;
@@ -209,14 +209,20 @@ public class Formula
         return paraBalance == 0;
     }
 
-    private static bool IsValidToken(List<string> formula)
+    /// <summary>
+    /// Checks if a token is valid. Token must be a number, variable, parentheses or operator.
+    /// </summary>
+    /// <param name="tokens">List of tokens</param>
+    /// <returns>True if token is a valid token and throws a Formula Format Exception if not</returns>
+    /// <exception cref="FormulaFormatException"></exception>
+    private static bool IsValidToken(List<string> tokens)
     {
-        if (formula.Count == 1) 
-            SingleTokenValidity(formula[0]);
+        if (tokens.Count == 1) 
+            SingleTokenValidity(tokens[0]);
         
-        if (!Regex.IsMatch(formula[0], FirstTokenRegExPattern))
+        if (!Regex.IsMatch(tokens[0], FirstTokenRegExPattern))
             throw new FormulaFormatException( $"Invalid first token" );
-        foreach (string token in formula)
+        foreach (string token in tokens)
         { 
             if (!Regex.IsMatch(token, @"[0-9]+|[a-zA-Z]+\d+|[\+\-*/]|\(|\)|\d+[eE]?\d+")) 
                 throw new FormulaFormatException($"Invalid token '{token}'");
@@ -225,21 +231,28 @@ public class Formula
         return true;
     }
 
-    private static bool IsValidParaOperFollowing(List<string> formula)
+    /// <summary>
+    /// Checks if the token following a parenthesis or operator is a valid following token.
+    /// Must be a number, variable, or an opening parenthesis if token is an opening paranthesis.
+    /// If token is an operator, the next token must be a number, variable, or opening parenthesis.
+    /// </summary>
+    /// <param name="tokens">List of tokens</param>
+    /// <returns>True if the token following a parenthesis or operator is not one of the valid options</returns>
+    private static bool IsValidParaOperFollowing(List<string> tokens)
     {
-        if  (formula.Count == 1)
-            return SingleTokenValidity(formula[0]);
+        if  (tokens.Count == 1)
+            return SingleTokenValidity(tokens[0]);
         
         string lpPattern = @"\(";
         string opPattern = @"[\+\-*/]";
 
         int i = 0;
-        foreach (var current in formula)
+        foreach (var current in tokens)
         {
-            if (i == formula.Count - 1)
+            if (i == tokens.Count - 1)
                 break;
             
-            string next = formula[i + 1];
+            string next = tokens[i + 1];
 
             if (Regex.IsMatch(current, lpPattern))
             {
@@ -257,21 +270,28 @@ public class Formula
         return true;
     }
 
-    private static bool IsValidExtraFollowing(List<string> formula)
+    /// <summary>
+    /// Checks if the token following a closing parenthesis valid token. The token
+    /// after a closing parenthesis must be either another closing parenthesis or an operator.
+    /// </summary>
+    /// <param name="tokens">List of tokens</param>
+    /// <returns>False if the token following a closing parenthesis is not another closing parenthesis
+    /// or operator. True if the next token is neither of those. </returns>
+    private static bool IsValidExtraFollowing(List<string> tokens)
     {
-        if  (formula.Count == 1)
-            return SingleTokenValidity(formula[0]);
+        if  (tokens.Count == 1)
+            return SingleTokenValidity(tokens[0]);
         
         string rpPattern = @"\)";
         string opPattern = @"[\+\-*/]";
         int i = 0;
-        foreach (string current in formula)
+        foreach (string current in tokens)
         {
             
-            if (i ==  formula.Count - 1)
+            if (i ==  tokens.Count - 1)
                 return Regex.IsMatch(current, LastTokenRegExPattern);
             
-            string next = formula[i + 1];
+            string next = tokens[i + 1];
 
             if (Regex.IsMatch(current, rpPattern))
             { 
@@ -286,11 +306,24 @@ public class Formula
         return true;
     }
 
+    /// <summary>
+    /// Checks to see if a single token is a number or variable.
+    /// </summary>
+    /// <param name="token">String that represents a token to be checked</param>
+    /// <returns>True if the token is a valid number or variable</returns>
     private static bool SingleTokenValidity(string token)
     {
-        return Regex.IsMatch(token, @"\d+|[a-zA-Z]+\d+|\d+[eE]?\d+");
+        return (IsNumber(token) || IsVar(token));
     }
 
+    /// <summary>
+    /// Helper method to ensure none of the rules are broken when a formula is passed through. Ensures token is valid
+    /// first. Makes sure that there are an equal number of parenthesis. Uses parentheses/operator
+    /// following token is valid. Uses helper method to ensure the token after a closing parenthesis is valid.
+    /// Checks last token to make sure it is a closing parenthesis, number, or variable.
+    /// </summary>
+    /// <param name="formula">List of tokens that represents the formula being checked</param>
+    /// <exception cref="FormulaFormatException"></exception>
     private static void IsValidFormula(List<string> formula)
     {
        
@@ -309,6 +342,7 @@ public class Formula
         if (!IsValidExtraFollowing(formula))
             throw new FormulaFormatException( $"Invalid Extra following" );
         
+        // Checks that the last token is a ), number, or variable
         if (!Regex.IsMatch(formula[^1], LastTokenRegExPattern)) throw new FormulaFormatException( $"Invalid last token" );
         
     }
