@@ -54,8 +54,6 @@ public class Formula
     
     private const string LastTokenRegExPattern = @"\)|[0-9]+|[a-zA-Z]+\d+|\d+[eE]?\d+";
     
-    private const string ExtraFollowingTokenRegExPattern = @"\)|\d+|\d+[eE]?\d+|[a-zA-Z]+\d+";
-    
     private static List<string> _formulaTokens = [];
     
     private static int TokenCount => _formulaTokens.Count;
@@ -192,8 +190,8 @@ public class Formula
 
     private static bool IsNumber(string token)
     {
-        string numberPattern = @"\d+|\d+[eE]?\d+";
-        return Regex.IsMatch( token, numberPattern );
+        
+        return double.TryParse(token, out _);
     }
 
     /// <summary>
@@ -237,19 +235,30 @@ public class Formula
             return SingleTokenValidity(formula[0]);
         
         string lpPattern = @"\(";
-        string rpPattern = @"\)";
         string opPattern = @"[\+\-*/]";
-        
-        for (int i = 0; i < _formulaTokens.Count - 1; i++)
+
+        int i = 0;
+        foreach (var current in formula)
         {
-            if (Regex.IsMatch(_formulaTokens[i], lpPattern) )
-                if (Regex.IsMatch(_formulaTokens[i + 1], opPattern) || Regex.IsMatch(_formulaTokens[i + 1], rpPattern))
-                    return true;
-            if (Regex.IsMatch(_formulaTokens[i], opPattern))
-                if (Regex.IsMatch(_formulaTokens[i + 1], lpPattern))
-                    return true;
+            if (i == formula.Count - 1)
+                break;
+            
+            string next = formula[i + 1];
+
+            if (Regex.IsMatch(current, lpPattern))
+            {
+                if (!IsNumber(next) && !IsVar(next) && !Regex.IsMatch(next, lpPattern))
+                    return false;
+            }
+            else if (Regex.IsMatch(current, opPattern))
+            {
+                if (!IsNumber(next) && !IsVar(next) && !Regex.IsMatch(next, lpPattern))
+                    return false;
+            }
+
+            i++;
         }
-        return false;
+        return true;
     }
 
     private static bool IsValidExtraFollowing(List<string> formula)
@@ -259,17 +268,26 @@ public class Formula
         
         string rpPattern = @"\)";
         string opPattern = @"[\+\-*/]";
-        for (int i = 0; i < _formulaTokens.Count - 1; i++)
+        int i = 0;
+        foreach (string current in formula)
         {
-            if (i < _formulaTokens.Count && Regex.IsMatch(_formulaTokens[i], ExtraFollowingTokenRegExPattern))
-                if (Regex.IsMatch(_formulaTokens[i + 1], rpPattern) ||
-                    Regex.IsMatch(_formulaTokens[i + 1], opPattern))
-                    return true;
             
-            if (i ==  _formulaTokens.Count)
-                return Regex.IsMatch(_formulaTokens[i], LastTokenRegExPattern);
+            if (i ==  formula.Count - 1)
+                return Regex.IsMatch(current, LastTokenRegExPattern);
+            
+            string next = formula[i + 1];
+
+            if (Regex.IsMatch(current, rpPattern))
+            { 
+                if (!Regex.IsMatch(next, rpPattern) &&
+                  !Regex.IsMatch(next, opPattern))
+                    return false;
+            }
+
+            i++;
         }
-       return false;
+       
+        return true;
     }
 
     private static bool SingleTokenValidity(string token)
@@ -296,6 +314,7 @@ public class Formula
             throw new FormulaFormatException( $"Invalid Extra following" );
         
         if (!Regex.IsMatch(formula[^1], LastTokenRegExPattern)) throw new FormulaFormatException( $"Invalid last token" );
+        
     }
     
 
