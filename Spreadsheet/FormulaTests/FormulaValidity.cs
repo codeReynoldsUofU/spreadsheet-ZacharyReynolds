@@ -188,9 +188,37 @@ public sealed class FormulaValidity
     }
 
     [TestMethod]
+    public void FormulaConstructor_TestExtraFollowingEmptyParentheses_Invalid()
+    {
+        Assert.Throws<FormulaFormatException>(() => _ = new Formula( "() + 1" ) );
+    }
+
+    [TestMethod]
+    public void FormulaConstructor_TestExtraFollowingLoneOperatior_Invalid()
+    {
+        Assert.Throws<FormulaFormatException>(() => _ = new Formula( "(1 + 1)+" ) );
+    }
+
+    [TestMethod]
     public void ToString_Valid()
     {
        Formula _ = new Formula( "1a2 + 2 * 3e6" );
        Assert.AreEqual( "1A2+2*3000000", _.ToString( ) );
+    }
+
+    [TestMethod]
+    public void GetVariables_Valid()
+    {
+        HashSet<string> _ =  new HashSet<string>( new[] { "1a1, 2p3, 9www8" });
+        Formula testVariables = new Formula( "1a1 + 2p3 + 9www8" );
+        Assert.AreEqual(_.ToString(), testVariables.GetVariables().ToString( ) );
+    }
+
+    [TestMethod]
+    public void GetVariablesWithDuplicates_Valid()
+    {
+        HashSet<string> _ =  new HashSet<string>( new[] { "1a1, 2p3, 9www8," });
+        Formula duplicateVariables = new Formula( "1a1 + 2p3 + 9www8 + 1a1" );
+        Assert.AreEqual(_.ToString(), duplicateVariables.GetVariables().ToString( ) );
     }
 }
