@@ -44,6 +44,12 @@ public sealed class FormulaValidity
     {
         Assert.Throws<FormulaFormatException>(() => _ = new Formula( "a1a" ));
     }
+
+    [TestMethod]
+    public void FormulaConstructor_TestTokenLetter_Invalid()
+    {
+        Assert.Throws<FormulaFormatException>(() => _ = new Formula( "a" ));
+    }
     
     // Scientific Notation validity test
     [TestMethod]

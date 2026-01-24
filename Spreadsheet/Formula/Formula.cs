@@ -56,8 +56,6 @@ public class Formula
     
     private static List<string> _formulaTokens = [];
     
-    private static int TokenCount => _formulaTokens.Count;
-    
     private static string _formulaString = "";
     /// <summary>
     ///   Initializes a new instance of the <see cref="_formulaString"/> class.
@@ -94,7 +92,6 @@ public class Formula
         _formulaTokens = GetTokens(formula);
 
         IsValidFormula(_formulaTokens);
-        
         
     }
 
@@ -163,11 +160,10 @@ public class Formula
     /// </returns>
     public override string ToString( )
     {
-        
         foreach (string token in _formulaTokens)
         {
             if (IsVar(token)) _formulaString += token.ToUpper();
-            else if (IsNumber(token)) _formulaString += token;
+            else if (IsNumber(token)) _formulaString += double.Parse(token);
             else _formulaString += token;
         }
 
