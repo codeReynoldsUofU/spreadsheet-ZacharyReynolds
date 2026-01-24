@@ -212,17 +212,17 @@ public sealed class FormulaValidity
     [TestMethod]
     public void ToString_Valid()
     {
-       Formula _ = new Formula( "1a2 + 2 * 3e6" );
-       Assert.AreEqual( "1A2+2*3000000", _.ToString( ) );
+       Formula testFormulaInput = new Formula( "1a2 + 2 * 3e6" );
+       Assert.AreEqual( "1A2+2*3000000", testFormulaInput.ToString( ) );
     }
 
     // Tests GetVariables method to ensure variables are contained in a hash set
     [TestMethod]
     public void GetVariables_Valid()
     {
-        HashSet<string> _ =  new HashSet<string>( new[] { "1a1, 2p3, 9www8" });
+        HashSet<string> variablesSet =  new HashSet<string>( new[] { "1a1, 2p3, 9www8" });
         Formula testVariables = new Formula( "1a1 + 2p3 + 9www8" );
-        Assert.AreEqual(_.ToString(), testVariables.GetVariables().ToString( ) );
+        Assert.AreEqual(variablesSet.ToString(), testVariables.GetVariables().ToString( ) );
     }
 
     // Tests GetVariables method to show that the hash set does not store duplicates
