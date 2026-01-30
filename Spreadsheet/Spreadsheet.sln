@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaTests", "FormulaTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyGraph", "DependencyGraph\DependencyGraph.csproj", "{79B5C9C4-DD65-4DE0-A83A-200329FBF638}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyGraphTests", "DependencyGraphTests\DependencyGraphTests.csproj", "{92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{79B5C9C4-DD65-4DE0-A83A-200329FBF638}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79B5C9C4-DD65-4DE0-A83A-200329FBF638}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79B5C9C4-DD65-4DE0-A83A-200329FBF638}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
