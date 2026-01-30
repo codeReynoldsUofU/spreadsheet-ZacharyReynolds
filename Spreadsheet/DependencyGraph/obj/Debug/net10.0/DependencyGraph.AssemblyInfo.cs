@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DependencyGraph")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a73273c42d12e7dba0c1e89c2c06ae0061128f36")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fcb15417c16f4f3f45675df7f1dc03bb8484dcb5")]
 [assembly: System.Reflection.AssemblyProductAttribute("DependencyGraph")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DependencyGraph")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
