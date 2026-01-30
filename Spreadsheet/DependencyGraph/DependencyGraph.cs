@@ -155,8 +155,12 @@ public class DependencyGraph
 
         if (!HasDependents(dependee))
         {
-           DependeeDictionary[dependee].Add(dependent);
-           DependentDictionary[dependent].Add(dependee);
+           DependeeDictionary[dependee] = new HashSet<string>{dependent};
+           DependentDictionary[dependent] = new HashSet<string>{dependee};
+        } else if (HasDependees(dependee) && !DependeeDictionary[dependee].Contains(dependent))
+        {
+            DependeeDictionary[dependee].Add(dependent);
+            DependentDictionary[dependent].Add(dependee);
         }
         
 
