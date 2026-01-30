@@ -148,13 +148,18 @@ public class DependencyGraph
     /// <param name="dependent"> the name of the node that cannot be evaluated until after dependee</param>
     public void AddDependency(string dependee, string dependent)
     {
-
-        if (!HasDependees(dependee))
+        if (HasDependents(dependee) && DependeeDictionary[dependee].Contains(dependent))
         {
-            DependeeDictionary.Add(dependee, new HashSet<string>(dependent));
-            DependentDictionary.Add(dependent, new HashSet<string>(dependee));
+            throw new Exception($" {dependent} already depends on {dependee}");
+        }
+
+        if (!HasDependents(dependee))
+        {
+           DependeeDictionary[dependee].Add(dependent);
+           DependentDictionary[dependent].Add(dependee);
         }
         
+
         _size++;
     }
 
@@ -213,6 +218,15 @@ public class DependencyGraph
     /// <param name="newDependees"> The new dependees for nodeName</param>
     public void ReplaceDependees(string nodeName, IEnumerable<string> newDependees)
     {
-        
+        if (!HasDependees(nodeName))
+            throw new Exception("Node has no dependees");
+        foreach (string dependee in DependeeDictionary[nodeName])
+        {
+           RemoveDependency(nodeName, dependee); 
+        }
+        foreach (string newDependee in newDependees)
+        {
+            AddDependency(nodeName, newDependee);
+        }
     }
 }
