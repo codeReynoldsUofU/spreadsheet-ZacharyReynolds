@@ -6,6 +6,8 @@
 //   (Clarified names in solution/project structure)
 // Version 1.3 - H. James de St. Germain Fall 2024
 
+// <Author> Zachary Reynolds </Author>
+
 using System.Collections;
 using System.Runtime.CompilerServices;
 
@@ -214,11 +216,11 @@ public class DependencyGraph
     /// <param name="newDependees"> The new dependees for nodeName</param>
     public void ReplaceDependees(string nodeName, IEnumerable<string> newDependees)
     {
-        foreach (string dependee in _dependentDictionary[nodeName])
+        foreach (string dependee in GetDependees(nodeName))
         {
             RemoveDependency(dependee, nodeName);
         }
-
+        
         foreach (string newDependee in newDependees)
         {
             AddDependency(newDependee, nodeName);
