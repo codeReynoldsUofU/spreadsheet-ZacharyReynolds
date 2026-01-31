@@ -79,9 +79,9 @@ public class DependencyGraph
     /// <summary>
     /// The number of ordered pairs in the DependencyGraph.
     /// </summary>
-    public int Size()
+    public int Size
     {
-        return _size; 
+        get { return _size; }
     }
 
     /// <summary>
