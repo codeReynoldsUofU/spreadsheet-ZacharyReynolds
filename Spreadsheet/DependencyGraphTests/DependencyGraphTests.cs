@@ -1,6 +1,7 @@
 ﻿namespace DependencyGraphTests;
 
 using DependencyGraph;
+
 /// <summary>
 /// This is a test class for DependencyGraphTest and is intended
 /// to contain all DependencyGraphTest Unit Tests

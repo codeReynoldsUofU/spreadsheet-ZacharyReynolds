@@ -59,8 +59,8 @@ using System.Collections.Generic;
 public class DependencyGraph
 {
     private int _size;
-    private Dictionary<string, HashSet<string>> DependeeDictionary;
-    private Dictionary<string, HashSet<string>> DependentDictionary;
+    private Dictionary<string, HashSet<string>> _dependeeDictionary;
+    private Dictionary<string, HashSet<string>> _dependentDictionary;
 
     /// <summary>
     ///   Initializes a new instance of the <see cref="DependencyGraph"/> class.
@@ -69,8 +69,9 @@ public class DependencyGraph
     public DependencyGraph()
     {
         _size = 0;
-        DependeeDictionary = new Dictionary<string, HashSet<string>>();
-        DependentDictionary = new Dictionary<string, HashSet<string>>();
+        _dependeeDictionary = [];
+        _dependentDictionary = [];
+
     }
 
     /// <summary>
@@ -78,7 +79,7 @@ public class DependencyGraph
     /// </summary>
     public int Size()
     {
-        return _size;
+        return _size; 
     }
 
     /// <summary>
@@ -88,10 +89,7 @@ public class DependencyGraph
     /// <returns> true if the node has dependents. </returns>
     public bool HasDependents(string nodeName)
     {
-        if (_size == 0)
-            throw new Exception("DependencyGraph is empty");
-
-        return DependeeDictionary.ContainsKey(nodeName);
+        return _dependeeDictionary.ContainsKey(nodeName);
     }
 
     /// <summary>
@@ -101,10 +99,7 @@ public class DependencyGraph
     /// <param name="nodeName">The name of the node.</param>
     public bool HasDependees(string nodeName)
     {
-        if (_size == 0)
-            throw new Exception("DependencyGraph is empty");
-
-        return DependentDictionary.ContainsKey(nodeName);
+        return _dependentDictionary.ContainsKey(nodeName);
     }
 
     /// <summary>
@@ -117,9 +112,9 @@ public class DependencyGraph
     public IEnumerable<string> GetDependents(string nodeName)
     {
         if (!HasDependents(nodeName))
-            throw new Exception("Node has no dependents");
+            return new HashSet<string>();
 
-        return DependeeDictionary[nodeName]; // Choose your own data structure
+        return _dependeeDictionary[nodeName]; // Choose your own data structure
     }
 
     /// <summary>
@@ -132,10 +127,10 @@ public class DependencyGraph
     public IEnumerable<string> GetDependees(string nodeName)
     {
         if (!HasDependees(nodeName))
-            throw new Exception("Node has no dependees");
+            return new HashSet<string>();
 
 
-        return DependentDictionary[nodeName]; // Choose your own data structure
+        return _dependentDictionary[nodeName]; // Choose your own data structure
     }
 
     /// <summary>
@@ -150,20 +145,17 @@ public class DependencyGraph
     public void AddDependency(string dependee, string dependent)
     {
         if (!HasDependents(dependee))
-            DependeeDictionary[dependee] = new HashSet<string>();
+            _dependeeDictionary[dependee] = new HashSet<string>();
 
         if (!HasDependees(dependent))
-            DependentDictionary[dependent] = new HashSet<string>();
+            _dependentDictionary[dependent] = new HashSet<string>();
 
-        if (DependeeDictionary[dependee].Add(dependent))
+        if (_dependeeDictionary[dependee].Add(dependent))
         {
-            DependentDictionary[dependent].Add(dependee);
+            _dependentDictionary[dependent].Add(dependee);
             _size++;
         }
-        else
-        {
-            throw new Exception("Dependency already exists");
-        }
+        
     }
     
 
@@ -176,21 +168,24 @@ public class DependencyGraph
     /// <param name="dependent"> The name of the node that cannot be evaluated until after dependee</param>
     public void RemoveDependency(string dependee, string dependent)
     {
-        if (!HasDependents(dependee))
-            throw new Exception("Node has no dependents");
-
-        if (HasDependees(dependee) && !DependeeDictionary[dependee].Contains(dependent))
-            throw new Exception($" {dependent} does not depend on  {dependee}");
-
-        if (DependeeDictionary[dependee].Contains(dependent))
+        if (DependencyCheck(dependee, dependent))
         {
-            DependeeDictionary[dependee].Remove(dependent);
-            DependentDictionary[dependent].Remove(dependee);
+            if (_dependeeDictionary[dependee].Remove(dependent))
+            {
+                _dependentDictionary[dependent].Remove(dependee);
+                _size--;
+            }
         }
-
-        _size--;
     }
 
+    private bool DependencyCheck(string dependee, string dependent)
+    {
+        if (_dependeeDictionary[dependee].Contains(dependent) && 
+            _dependentDictionary[dependent].Contains(dependee))
+            return true;
+        else
+            return false;
+    }
     /// <summary>
     ///   Removes all existing ordered pairs of the form (nodeName, *).  Then, for each
     ///   t in newDependents, adds the ordered pair (nodeName, t).
@@ -199,14 +194,10 @@ public class DependencyGraph
     /// <param name="newDependents"> The new dependents for nodeName</param>
     public void ReplaceDependents(string nodeName, IEnumerable<string> newDependents)
     {
-        if (!HasDependents(nodeName))
-            throw new Exception("Node has no dependents");
-
-        foreach (string dependent in DependeeDictionary[nodeName])
+        foreach (string dependent in _dependeeDictionary[nodeName])
         {
             RemoveDependency(nodeName, dependent);
         }
-
         foreach (string newDependent in newDependents)
         {
             AddDependency(nodeName, newDependent);
@@ -225,7 +216,7 @@ public class DependencyGraph
     {
         if (!HasDependees(nodeName))
             throw new Exception("Node has no dependees");
-        foreach (string dependee in DependeeDictionary[nodeName])
+        foreach (string dependee in _dependeeDictionary[nodeName])
         {
             RemoveDependency(nodeName, dependee);
         }
