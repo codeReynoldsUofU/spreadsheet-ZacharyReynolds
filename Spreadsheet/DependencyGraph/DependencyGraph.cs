@@ -214,16 +214,14 @@ public class DependencyGraph
     /// <param name="newDependees"> The new dependees for nodeName</param>
     public void ReplaceDependees(string nodeName, IEnumerable<string> newDependees)
     {
-        if (!HasDependees(nodeName))
-            throw new Exception("Node has no dependees");
-        foreach (string dependee in _dependeeDictionary[nodeName])
+        foreach (string dependee in _dependentDictionary[nodeName])
         {
-            RemoveDependency(nodeName, dependee);
+            RemoveDependency(dependee, nodeName);
         }
 
         foreach (string newDependee in newDependees)
         {
-            AddDependency(nodeName, newDependee);
+            AddDependency(newDependee, nodeName);
         }
     }
 }
