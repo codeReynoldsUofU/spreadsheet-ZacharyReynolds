@@ -1,0 +1,12 @@
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/bin/Debug/net10.0/DependencyGraph.deps.json
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/bin/Debug/net10.0/DependencyGraph.dll
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/bin/Debug/net10.0/DependencyGraph.pdb
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/obj/Debug/net10.0/DependencyGraph.GeneratedMSBuildEditorConfig.editorconfig
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/obj/Debug/net10.0/DependencyGraph.AssemblyInfoInputs.cache
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/obj/Debug/net10.0/DependencyGraph.AssemblyInfo.cs
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/obj/Debug/net10.0/DependencyGraph.csproj.CoreCompileInputs.cache
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/obj/Debug/net10.0/DependencyGraph.sourcelink.json
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/obj/Debug/net10.0/DependencyGraph.dll
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/obj/Debug/net10.0/refint/DependencyGraph.dll
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/obj/Debug/net10.0/DependencyGraph.pdb
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/DependencyGraph/obj/Debug/net10.0/ref/DependencyGraph.dll
