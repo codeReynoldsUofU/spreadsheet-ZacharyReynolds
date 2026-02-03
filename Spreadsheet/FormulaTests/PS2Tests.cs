@@ -359,6 +359,7 @@ public class GradingTests
         Assert.IsTrue( f1.ToString().Equals( "2-300" ) );
         f1 = new( "1e20" );
         Assert.IsTrue( f1.ToString().Equals( "1E+20" ) );
+        
     }
 
     [TestMethod]
@@ -377,7 +378,7 @@ public class GradingTests
     {
         Formula f1 = new("2+x1");
         Formula f2 = new("2+X1");
-
+        
         Assert.IsTrue( f1.ToString().Equals( "2+X1" ) );
         Assert.IsTrue( f1.ToString().Equals( f2.ToString() ) );
     }
@@ -540,6 +541,7 @@ public class GradingTests
     {
         Formula f1 = new("2");
         Formula f2 = new("5");
+        Console.WriteLine( f1.ToString() );
         Assert.AreNotEqual(f2.ToString(), f1.ToString());
     }
 
