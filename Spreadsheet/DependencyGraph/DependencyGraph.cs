@@ -73,7 +73,6 @@ public class DependencyGraph
         _size = 0;
         _dependeeDictionary = [];
         _dependentDictionary = [];
-
     }
 
     /// <summary>
@@ -91,7 +90,10 @@ public class DependencyGraph
     /// <returns> true if the node has dependents. </returns>
     public bool HasDependents(string nodeName)
     {
-        return _dependeeDictionary.ContainsKey(nodeName);
+        if (_dependeeDictionary.ContainsKey(nodeName) &&  _dependeeDictionary[nodeName].Count > 0)
+            return true;
+        
+        return false;
     }
 
     /// <summary>
@@ -101,7 +103,10 @@ public class DependencyGraph
     /// <param name="nodeName">The name of the node.</param>
     public bool HasDependees(string nodeName)
     {
-        return _dependentDictionary.ContainsKey(nodeName);
+        if (_dependentDictionary.ContainsKey(nodeName) && _dependentDictionary[nodeName].Count > 0)
+            return true;
+        
+        return false;
     }
 
     /// <summary>
@@ -146,20 +151,19 @@ public class DependencyGraph
     /// <param name="dependent"> the name of the node that cannot be evaluated until after dependee</param>
     public void AddDependency(string dependee, string dependent)
     {
-        if (!HasDependents(dependee))
-            _dependeeDictionary[dependee] = new HashSet<string>();
+        if (!_dependeeDictionary.ContainsKey(dependee))
+            _dependeeDictionary.Add(dependee, new HashSet<string>());
 
-        if (!HasDependees(dependent))
-            _dependentDictionary[dependent] = new HashSet<string>();
+        if (!_dependentDictionary.ContainsKey(dependent))
+            _dependentDictionary.Add(dependent, new HashSet<string>());
 
         if (_dependeeDictionary[dependee].Add(dependent))
         {
             _dependentDictionary[dependent].Add(dependee);
             _size++;
         }
-        
     }
-    
+
 
     /// <summary>
     ///   <para>
@@ -170,24 +174,17 @@ public class DependencyGraph
     /// <param name="dependent"> The name of the node that cannot be evaluated until after dependee</param>
     public void RemoveDependency(string dependee, string dependent)
     {
-        if (DependencyCheck(dependee, dependent))
+        if (HasDependents(dependee))
         {
             if (_dependeeDictionary[dependee].Remove(dependent))
             {
                 _dependentDictionary[dependent].Remove(dependee);
-                _size--;
             }
+            _size--;
         }
     }
 
-    private bool DependencyCheck(string dependee, string dependent)
-    {
-        if (_dependeeDictionary[dependee].Contains(dependent) && 
-            _dependentDictionary[dependent].Contains(dependee))
-            return true;
-        else
-            return false;
-    }
+
     /// <summary>
     ///   Removes all existing ordered pairs of the form (nodeName, *).  Then, for each
     ///   t in newDependents, adds the ordered pair (nodeName, t).
@@ -196,13 +193,24 @@ public class DependencyGraph
     /// <param name="newDependents"> The new dependents for nodeName</param>
     public void ReplaceDependents(string nodeName, IEnumerable<string> newDependents)
     {
-        foreach (string dependent in _dependeeDictionary[nodeName])
+        if (_dependeeDictionary.ContainsKey(nodeName))
         {
-            RemoveDependency(nodeName, dependent);
+            foreach (string dependent in GetDependents(nodeName))
+            {
+                RemoveDependency(nodeName, dependent);
+            }
+
+            foreach (string newDependent in newDependents)
+            {
+                AddDependency(nodeName, newDependent);
+            }
         }
-        foreach (string newDependent in newDependents)
+        else
         {
-            AddDependency(nodeName, newDependent);
+            foreach (string newDependent in newDependents)
+            {
+                AddDependency(nodeName, newDependent);
+            }
         }
     }
 
@@ -216,14 +224,24 @@ public class DependencyGraph
     /// <param name="newDependees"> The new dependees for nodeName</param>
     public void ReplaceDependees(string nodeName, IEnumerable<string> newDependees)
     {
-        foreach (string dependee in GetDependees(nodeName))
+        if (_dependentDictionary.ContainsKey(nodeName))
         {
-            RemoveDependency(dependee, nodeName);
+            foreach (string dependee in GetDependees(nodeName))
+            {
+                RemoveDependency(dependee, nodeName);
+            }
+
+            foreach (string newDependee in newDependees)
+            {
+                AddDependency(newDependee, nodeName);
+            }
         }
-        
-        foreach (string newDependee in newDependees)
+        else
         {
-            AddDependency(newDependee, nodeName);
+            foreach (string dependee in newDependees)
+            {
+                AddDependency(dependee, nodeName);
+            }
         }
     }
 }
