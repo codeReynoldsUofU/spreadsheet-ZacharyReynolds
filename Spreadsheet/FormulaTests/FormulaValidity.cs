@@ -233,4 +233,56 @@ public sealed class FormulaValidity
         Formula duplicateVariables = new Formula( "1a1 + 2p3 + 9www8 + 1a1" );
         Assert.AreEqual(_.ToString(), duplicateVariables.GetVariables().ToString( ) );
     }
+
+    /// <summary>
+    /// Tests for new Formula Methods
+    /// </summary>
+    [TestMethod]
+    public void FormulasAreEqual_EqualEqualOverride()
+    {
+        Formula f1 = new Formula( "1a2 + 2 * 3e6" );
+        Formula f2 = new Formula( "1a2 + 2 * 3e6" );
+        Assert.IsTrue(f1 == f2);
+    }
+
+    [TestMethod]
+    public void FormulasAreNotEqual_EqualEqualOverride()
+    {
+        Formula f1 = new Formula("1a2 + 2 * 3e6");
+        Formula f2 = new Formula( "1a2 + 2 * 3e5" );
+        Assert.IsFalse(f1 == f2);
+    }
+
+    [TestMethod]
+    public void FormulasAreEqual_NotEqualOverride()
+    {
+        Formula f1 = new Formula("1a2 + 2 * 3e6");
+        Formula f2 = new Formula( "1a2 + 2 * 3e6" );
+        Assert.IsFalse(f1 != f2);
+    }
+
+    [TestMethod]
+    public void FormulasAreNotEqual_EqualNotOverride()
+    {
+        Formula f1 = new Formula("1a2 + 2 * 3e6");
+        Formula f2 = new Formula( "1a2 + 2 * 3e5" );
+        Assert.IsTrue(f1 != f2);
+    }
+
+    [TestMethod]
+    public void GetHashCode_Equal()
+    {
+        Formula f1 = new Formula( "1a2 + 2 * 3e6" );
+        Formula f2 = new Formula( "1a2 + 2 * 3e6" );
+        Assert.AreEqual(f1.GetHashCode(), f2.GetHashCode());
+    }
+
+    [TestMethod]
+    public void GetHashCode_NotEqual()
+    {
+        Formula f1 = new Formula("1a2 + 2 * 3e6");
+        Formula f2 = new Formula("1a2 + 2 * 3e5");
+        Assert.AreNotEqual(f1.GetHashCode(), f2.GetHashCode());
+    }
+    
 }

@@ -12,8 +12,17 @@
   &lt;TestAncestor&gt;
     &lt;TestId&gt;MSTest::92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED::net10.0::DependencyGraphTests.DependencyGraphTest&lt;/TestId&gt;
     &lt;TestId&gt;MSTest::92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED::net10.0::DependencyGraphTests.DependencyGraphTests&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.FormulasAreEqual&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.FormulasAreNotEqual&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.FormulasAreNotEqual_NotEqualOverride&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.FormulasAreNotEqual_EqualNotOverride&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.FormulasAreEqual_NotEqualOverride&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.GetHashCode_Equal&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.GetHashCode_NotEqual&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.GetHashCode_EqualMethod&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
+	
 	
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e83ee40a_002D31a3_002D4839_002Da279_002D5c759dcb15e2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;Solution /&gt;
