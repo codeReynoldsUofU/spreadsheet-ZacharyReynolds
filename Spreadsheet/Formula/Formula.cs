@@ -11,6 +11,7 @@
 //   </para>
 // </summary>
 
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace Formula;
@@ -60,6 +61,10 @@ public class Formula
 
     private string _formulaString = "";
 
+    private Stack<string> valueStack;
+
+    private Stack<string> operatorStack;
+
     /// <summary>
     ///   Initializes a new instance of the <see cref="_formulaString"/> class.
     ///   <para>
@@ -93,6 +98,8 @@ public class Formula
         if (formula == String.Empty || Regex.IsMatch(formula, @"^\s+$"))
             throw new FormulaFormatException("Empty formula");
 
+        valueStack = new Stack<string>();
+        operatorStack = new Stack<string>();
 
         _formulaTokens = GetTokens(formula);
 
@@ -302,29 +309,29 @@ public class Formula
     {
         string rpPattern = @"\)";
         string opPattern = @"[\+\-*/]";
-        
-        for (int i =0; i <tokens.Count - 1; i++)
+
+        for (int i = 0; i < tokens.Count - 1; i++)
         {
             string current = tokens[i];
-            
+
             if (i == tokens.Count - 1)
                 return Regex.IsMatch(current, LastTokenRegExPattern);
 
             string next = tokens[i + 1];
-            
+
             if (Regex.IsMatch(current, rpPattern))
             {
                 if (!Regex.IsMatch(next, rpPattern) &&
                     !Regex.IsMatch(next, opPattern))
                     return false;
-            } 
+            }
             else if (Regex.IsMatch(current, opPattern))
             {
                 if (!IsNumber(next) && !IsVar(next))
                     return false;
             }
-            
         }
+
         return true;
     }
 
@@ -374,8 +381,8 @@ public class Formula
         if (!Regex.IsMatch(formula[^1], LastTokenRegExPattern))
             throw new FormulaFormatException($"Invalid last token");
     }
-    
-    
+
+
     /// <summary>
     ///   <para>
     ///     Given an expression, enumerates the tokens that compose it.
@@ -428,7 +435,7 @@ public class Formula
 
         return results;
     }
-    
+
     /// <summary>
     ///   <para>
     ///     Reports whether f1 == f2, using the notion of equality from the <see cref="Equals"/> method.
@@ -454,7 +461,7 @@ public class Formula
     {
         return !f1.Equals(f2);
     }
-    
+
     /// <summary>
     ///   <para>
     ///     Determines if two formula objects represent the same formula.
@@ -476,13 +483,12 @@ public class Formula
     {
         if (obj == null || !(obj is Formula))
             return false;
-        
+
         Formula other = (Formula)obj;
 
         return Equals(ToString(), other.ToString());
-
     }
-    
+
     /// <summary>
     ///   <para>
     ///     Returns a hash code for this Formula.  If f1.Equals(f2), then it must be the
@@ -495,7 +501,7 @@ public class Formula
     {
         return ToString().GetHashCode();
     }
-    
+
     /// <summary>
     ///   <para>
     ///     Evaluates this Formula, using the lookup delegate to determine the values of
@@ -525,12 +531,117 @@ public class Formula
     /// <returns> Either a double or a FormulaError, based on evaluating the formula.</returns>
     public object Evaluate(Lookup lookup)
     {
-        Stack<string> valueStack = new Stack<string>();
-        Stack<string> operatorStack = new Stack<string>();
+        foreach (string token in _formulaTokens)
+        {
+            if (IsNumber(token) || IsVar(token))
+            {
+                double right;
+                
+                if (IsNumber(token))
+                    right = double.Parse(token);
+                else
+                    right = lookup(token);
+                if (operatorStack.Count > 0)
+                {
+                    MultiplyAndDivide(right);
+                }
+                else
+                    valueStack.Push(right.ToString());
+            }
+            else if (Regex.IsMatch(token, @"[\+-]"))
+            {
+                if (operatorStack.Count > 0)
+                {
+                    AddAndSubtract();
+                    operatorStack.Push(token);
+                }
+                else
+                {
+                    operatorStack.Push(token);
+                }
+            }
+            else if (Regex.IsMatch(token, @"[\*/\(]"))
+            {
+                operatorStack.Push(token);
+            }
+            else if (Regex.IsMatch(token, @"\)"))
+            {
+                if (operatorStack.Count > 0)
+                {
+                    string op = operatorStack.Peek();
+
+                    if (Regex.IsMatch(op, @"[\+-]"))
+                    {
+                        AddAndSubtract();
+                        operatorStack.Pop();
+                    }
+                    else if (Regex.IsMatch(op, @"[\*/]"))
+                    {
+                        double right = double.Parse(valueStack.Pop());
+                        MultiplyAndDivide(right);
+                    }
+                }
+            }
+        }
+
+        if (operatorStack.Count > 0)
+        {
+            AddAndSubtract();
+        }
         
+        return double.Parse(valueStack.Pop());
+
+    }
+
+    private void AddAndSubtract()
+    {
+        string op = operatorStack.Peek();
         
-        // FIXME: Implement the required algorithm here.
-        throw new NotImplementedException();
+        if (Regex.IsMatch(op, @"\+") || Regex.IsMatch(op, "-"))
+        {
+            double right = double.Parse(valueStack.Pop());
+            double result = double.Parse(valueStack.Pop());
+            operatorStack.Pop();
+            if (Regex.IsMatch(op, @"\+"))
+            {
+                result += right;
+            }
+            else
+            {
+                result -= right;
+            }
+
+            valueStack.Push(result.ToString());
+        }
+
+    }
+
+    private void MultiplyAndDivide(double right)
+    {
+        string op = operatorStack.Peek();
+
+        if (Regex.IsMatch(op, @"\*") || Regex.IsMatch(op, "/"))
+        {
+            double result = double.Parse(valueStack.Pop());
+
+            operatorStack.Pop();
+
+            if (Regex.IsMatch(op, @"\*"))
+            {
+                result *= right;
+            }
+            else
+            {
+                if (result == 0)
+                {
+                    new FormulaError("Cannot divide by 0");
+                }
+                else
+                    result /= right;
+            }
+
+            valueStack.Push(result.ToString());
+        }
     }
 }
 
@@ -539,8 +650,6 @@ public class Formula
 /// </summary>
 public class FormulaFormatException : Exception
 {
-    
-
     /// <summary>
     ///   Initializes a new instance of the <see cref="FormulaFormatException"/> class.
     ///   <para>
@@ -553,7 +662,6 @@ public class FormulaFormatException : Exception
     {
         // All this does is call the base constructor. No extra code needed.
     }
-    
 }
 
 /// <summary>

@@ -284,5 +284,21 @@ public sealed class FormulaValidity
         Formula f2 = new Formula("1a2 + 2 * 3e5");
         Assert.AreNotEqual(f1.GetHashCode(), f2.GetHashCode());
     }
+
+    public double TestLookup(string token)
+    {
+        if (token == "A1") return 12;
+        if (token == "B2") return 5;
+        if (token == "C3") return 3;
+        throw new FormulaFormatException("Unknown token:");
+    }
+
+    [TestMethod]
+    public void TestLookup_Valid()
+    {
+        Formula f1 = new Formula( "A1 + B2 + C3" );
+        object result = f1.Evaluate(TestLookup);
+        Assert.AreEqual(20, (double)result);
+    }
     
 }
