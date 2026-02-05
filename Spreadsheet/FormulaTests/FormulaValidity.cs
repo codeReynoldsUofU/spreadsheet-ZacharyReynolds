@@ -288,17 +288,74 @@ public sealed class FormulaValidity
     public double TestLookup(string token)
     {
         if (token == "A1") return 12;
-        if (token == "B2") return 5;
-        if (token == "C3") return 3;
+        if (token == "B2") return 8;
+        if (token == "C3") return 2;
         throw new FormulaFormatException("Unknown token:");
     }
 
     [TestMethod]
     public void TestLookup_Valid()
     {
-        Formula f1 = new Formula( "A1 + B2 + C3" );
+        Formula f1 = new Formula( "A1 + B2" );
         object result = f1.Evaluate(TestLookup);
         Assert.AreEqual(20, (double)result);
     }
-    
+
+    [TestMethod]
+    public void TestLookup_VarPlusNum()
+    {
+        Formula f1 = new Formula( "A1 + 8" );
+        object result = f1.Evaluate(TestLookup);
+        Assert.AreEqual(20, (double)result);
+    }
+
+    [TestMethod]
+    public void TestLookup_Multiply()
+    {
+        Formula f1 = new Formula( "A1 * B2" );
+        object result = f1.Evaluate(TestLookup);
+        Assert.AreEqual(96, (double)result);
+    }
+
+    [TestMethod]
+    public void TestLookup_MultiplyAndAdd()
+    {
+        Formula f1 = new Formula("A1 * B2 + C3" );
+        object result = f1.Evaluate(TestLookup);
+        Assert.AreEqual(98, (double)result);
+    }
+
+    [TestMethod]
+    public void TestLookup_AddThenMultiply()
+    {
+        Formula f1 = new Formula( "A1 + B2 * C3" );
+        object result = f1.Evaluate(TestLookup);
+        Assert.AreEqual(28, (double)result);
+    }
+
+    [TestMethod]
+    public void TestLookup_Divide()
+    {
+        Formula f1 = new Formula( "A1 / B2" );
+        double answer = 12.0 / 8.0;
+        object result = f1.Evaluate(TestLookup);
+        Assert.AreEqual(answer, (double)result);
+    }
+
+    [TestMethod]
+    public void TestLookup_DivideAndMultiply()
+    {
+        Formula f1 = new Formula( "(A1 + B2) / C3" );
+        object result = f1.Evaluate(TestLookup);
+        Assert.AreEqual(10, (double)result);
+    }
+
+    [TestMethod]
+    public void TestLookup_LongArithmetic()
+    {
+        Formula f1 = new Formula( "(A1 + B2) * C3 - 10 + (A1 / C3) - 1" );
+        object result = f1.Evaluate(TestLookup);
+        double answer = (12.0 + 8.0) * 2.0 - 10.0 + (12.0 / 2.0) - 1;
+        Assert.AreEqual(35, (double)result);
+    }
 }

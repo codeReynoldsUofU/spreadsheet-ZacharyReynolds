@@ -6,29 +6,33 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ATask_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003F5bd6892267269233dcf5c6191f357b0ba6c4257d1e757ca4d2fe93272b29d9b_003FTask_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003ATestMethodInfo_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003F9ea467e7c7b4671a214143293021e7ec337916b71125d896e17a0b7fc_003FTestMethodInfo_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AThrowHelper_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003F_002E_002E_003F_002E_002E_003FLibrary_003FApplication_0020Support_003FJetBrains_003FRider2025_002E3_003Fresharper_002Dhost_003FSourcesCache_003F5c21b9149ef32e1f68396d6e6fc7311324c9829ed40328c33f6d5f859a757_003FThrowHelper_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5348f30f_002D02fd_002D4a28_002Dbdd8_002D5ccc676f98b0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;Solution /&gt;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8f7e1994_002D0900_002D4674_002D9684_002D3099609539e1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="DependencyGraphTest" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=04e3f765_002Ded4f_002D42e5_002D87c6_002Dadf7813481f1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestLookup_Valid" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;MSTest::92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED::net10.0::DependencyGraphTests.DependencyGraphTest&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED::net10.0::DependencyGraphTests.DependencyGraphTests&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.FormulasAreEqual&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.FormulasAreNotEqual&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.FormulasAreNotEqual_NotEqualOverride&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.FormulasAreNotEqual_EqualNotOverride&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.FormulasAreEqual_NotEqualOverride&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.GetHashCode_Equal&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.GetHashCode_NotEqual&lt;/TestId&gt;
-    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.GetHashCode_EqualMethod&lt;/TestId&gt;
     &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_Valid&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_Multiply&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_MultiplyAndAdd&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_AddThenMultiply&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_Divide&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_DivideAndMultiply&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_VarPlusNum&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_LongArithmetic&lt;/TestId&gt;
+  &lt;/TestAncestor&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8b703fdc_002D6c6d_002D4a45_002D9433_002D21b0b706f048/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestLookup_Divide" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;TestAncestor&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_Divide&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_MultiplyAndAdd&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_VarPlusNum&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_Valid&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_Multiply&lt;/TestId&gt;
+    &lt;TestId&gt;MSTest::0A2C3073-4861-49BE-9F16-BB4C5DB7030A::net10.0::FormulaTests.FormulaValidity.TestLookup_AddThenMultiply&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String>
 	
 	
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e83ee40a_002D31a3_002D4839_002Da279_002D5c759dcb15e2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
-  &lt;Solution /&gt;
-&lt;/SessionState&gt;</s:String>
+	
+	
+	
 	
 	
 	

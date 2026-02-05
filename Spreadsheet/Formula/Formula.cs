@@ -327,7 +327,7 @@ public class Formula
             }
             else if (Regex.IsMatch(current, opPattern))
             {
-                if (!IsNumber(next) && !IsVar(next))
+                if (!IsNumber(next) && !IsVar(next) && !Regex.IsMatch(next, @"\("))
                     return false;
             }
         }
@@ -541,9 +541,9 @@ public class Formula
                     right = double.Parse(token);
                 else
                     right = lookup(token);
-                if (operatorStack.Count > 0)
+                if (operatorStack.Count > 0  && Regex.IsMatch(operatorStack.Peek(), @"[\*/]"))
                 {
-                    MultiplyAndDivide(right);
+                    MultiplyOrDivide(right);
                 }
                 else
                     valueStack.Push(right.ToString());
@@ -552,7 +552,7 @@ public class Formula
             {
                 if (operatorStack.Count > 0)
                 {
-                    AddAndSubtract();
+                    AddOrSubtract();
                     operatorStack.Push(token);
                 }
                 else
@@ -560,7 +560,7 @@ public class Formula
                     operatorStack.Push(token);
                 }
             }
-            else if (Regex.IsMatch(token, @"[\*/\(]"))
+            else if (Regex.IsMatch(token, @"[\*/(]"))
             {
                 operatorStack.Push(token);
             }
@@ -572,28 +572,28 @@ public class Formula
 
                     if (Regex.IsMatch(op, @"[\+-]"))
                     {
-                        AddAndSubtract();
-                        operatorStack.Pop();
+                        AddOrSubtract();
                     }
                     else if (Regex.IsMatch(op, @"[\*/]"))
                     {
                         double right = double.Parse(valueStack.Pop());
-                        MultiplyAndDivide(right);
+                        MultiplyOrDivide(right);
                     }
+                    operatorStack.Pop();
                 }
             }
         }
 
         if (operatorStack.Count > 0)
         {
-            AddAndSubtract();
+            AddOrSubtract();
         }
         
         return double.Parse(valueStack.Pop());
 
     }
 
-    private void AddAndSubtract()
+    private void AddOrSubtract()
     {
         string op = operatorStack.Peek();
         
@@ -616,7 +616,7 @@ public class Formula
 
     }
 
-    private void MultiplyAndDivide(double right)
+    private void MultiplyOrDivide(double right)
     {
         string op = operatorStack.Peek();
 
