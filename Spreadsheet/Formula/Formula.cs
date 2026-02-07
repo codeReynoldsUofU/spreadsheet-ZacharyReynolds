@@ -188,11 +188,16 @@ public class Formula
         return Regex.IsMatch(token, standaloneVarPattern);
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="token"></param>
+    /// <returns></returns>
     private static bool IsNumber(string token)
     {
         return double.TryParse(token, out _);
     }
+    
 
     /// <summary>
     /// Checks if there is an equal number of opening and closing parentheses. Opening parentheses add 1
@@ -227,28 +232,17 @@ public class Formula
 
         if (!Regex.IsMatch(tokens[0], FirstTokenRegExPattern))
             throw new FormulaFormatException($"Invalid first token");
-
-        bool validToken = true;
+        
 
         foreach (string token in tokens)
         {
-            if (IsNumber(token))
-                validToken = true;
-
-            else if (IsVar(token))
-                validToken = true;
-
-            else if (Regex.IsMatch(token, @"^[\(\)\+\-*/]$"))
-                validToken = true;
-
-            else
-                validToken = false;
+            if (!IsNumber(token) && !IsVar(token) && !Regex.IsMatch(token, @"^[\(\)\+\-\*/]$"))
+                return false;
         }
+        
+        BuildString(tokens);
 
-        if (validToken)
-            BuildString(tokens);
-
-        return validToken;
+        return true;
     }
 
     private static string BuildString(List<string> tokens)
@@ -363,7 +357,8 @@ public class Formula
     private static void IsValidFormula(List<string> formula)
     {
         // Rule 2 Valid Tokens
-        IsValidToken(formula);
+        if (!IsValidToken(formula))
+            throw new FormulaFormatException($"Invalid token");
 
         // Rule 3 & 4, Closing and Balanced Parentheses
         if (!ParenthesesCheck(formula))

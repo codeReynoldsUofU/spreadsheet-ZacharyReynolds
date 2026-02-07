@@ -301,6 +301,50 @@ public sealed class FormulaValidity
         Formula f2 = new Formula("1a2 + 2 * 3e5");
         Assert.AreNotEqual(f1.GetHashCode(), f2.GetHashCode());
     }
+
+    // Expects equals to report true because Formulas f1 and f2 are the same
+    [TestMethod]
+    public void Equals_SameFormula()
+    {
+        Formula f1 = new Formula("1a2 + 2 * 3e6");
+        Formula f2 = new Formula("1a2 + 2 * 3e6");
+        Assert.IsTrue(f1.Equals(f2));
+    }
+
+    // Expects equals to report false because Formulas f1 and f2 are not the same
+    [TestMethod]
+    public void Equals_DifferentFormula()
+    {
+        Formula f1 = new Formula("1a2 + 2 * 3e6");
+        Formula f2 = new Formula("1a2 + 2 * 3e5");
+        Assert.IsFalse(f1.Equals(f2));
+    }
+
+    // Expects false because Formula f1 and double f2 are the same type
+    [TestMethod]
+    public void Equals_DifferentTypes()
+    {
+        Formula f1 = new Formula("12.0");
+        double f2 = 12.0;
+        Assert.IsFalse(f1.Equals(f2));
+    }
+
+    // Expects Formula f1 and 12.0 to be equal after evaluating f1
+    [TestMethod]
+    public void Equals_AfterEvaluate()
+    {
+        Formula f1 = new Formula("A1");
+        double f2 = 12.0;
+
+        double TestLookup(string token)
+        {
+            if (token == "A1") 
+                return 12.0;
+            
+            throw new ArgumentException("Invalid token");
+        }
+        Assert.IsTrue(f1.Evaluate(TestLookup).Equals(f2));
+    }
 }
 
 /// <summary>
@@ -550,6 +594,20 @@ public class EvaluateFormula
 
         object result = f1.Evaluate(TestLookup);
         Assert.AreEqual(0, (double)result);
+    }
+
+    [TestMethod]
+    public void Evaluate_LoneVariable()
+    {
+        Formula f1 = new Formula("A1");
+
+        double TestLookup(string token)
+        {
+            if (token == "A1") return 12.0;
+            
+            throw new ArgumentException($"Invalid token {token}");
+        }
+        Assert.AreEqual(12.0, f1.Evaluate(TestLookup));
     }
     
 }
