@@ -536,14 +536,30 @@ public class Formula
             if (IsNumber(token) || IsVar(token))
             {
                 double right;
-                
+
                 if (IsNumber(token))
                     right = double.Parse(token);
                 else
-                    right = lookup(token);
-                if (operatorStack.Count > 0  && Regex.IsMatch(operatorStack.Peek(), @"[\*/]"))
                 {
+                    try
+                    {
+                        right = lookup(token);
+                    }
+                    catch (ArgumentException)
+                    {
+                        return new FormulaError("Cell was not recognized");
+                    }
+                }
+
+                if (operatorStack.Count > 0 && Regex.IsMatch(operatorStack.Peek(), @"[\*/]"))
+                {
+                    if (right == 0 && Regex.IsMatch(operatorStack.Peek(), @"/"))
+                    {
+                        return new FormulaError("Cannot divide by 0");
+                    }
+                    
                     MultiplyOrDivide(right);
+                    
                 }
                 else
                     valueStack.Push(right.ToString());
@@ -579,6 +595,7 @@ public class Formula
                         double right = double.Parse(valueStack.Pop());
                         MultiplyOrDivide(right);
                     }
+
                     operatorStack.Pop();
                 }
             }
@@ -588,15 +605,17 @@ public class Formula
         {
             AddOrSubtract();
         }
-        
-        return double.Parse(valueStack.Pop());
 
+        return double.Parse(valueStack.Pop());
     }
 
+    /// <summary>
+    /// Helper method to handle logoc for addition and subtraction for Evaluate method.
+    /// </summary>
     private void AddOrSubtract()
     {
         string op = operatorStack.Peek();
-        
+
         if (Regex.IsMatch(op, @"\+") || Regex.IsMatch(op, "-"))
         {
             double right = double.Parse(valueStack.Pop());
@@ -613,9 +632,13 @@ public class Formula
 
             valueStack.Push(result.ToString());
         }
-
     }
 
+    /// <summary>
+    /// Handles logic for multiplication and division in the Evaluate method. 
+    /// </summary>
+    /// <param name="right">Next value in the order of operations to me multiplied or divided by the value
+    /// in the stack</param>
     private void MultiplyOrDivide(double right)
     {
         string op = operatorStack.Peek();
@@ -632,12 +655,7 @@ public class Formula
             }
             else
             {
-                if (result == 0)
-                {
-                    new FormulaError("Cannot divide by 0");
-                }
-                else
-                    result /= right;
+                result /= right;
             }
 
             valueStack.Push(result.ToString());
