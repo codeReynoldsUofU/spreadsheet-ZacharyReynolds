@@ -195,6 +195,46 @@ public class DependencyGraphTests
         // Shows that our created HashSet and the HashSet returned from GetDependees is the same
         Assert.IsTrue(dependees.SetEquals(dg.GetDependees("A2")));
     }
+    
+    // Allows DependencyGraph to call ReplaceDependees even if x has no dependents
+    [TestMethod]
+    public void ReplaceDependents_EmptyGraph_NoEffect( )
+    {
+        DependencyGraph dg = new();
+        dg.ReplaceDependents( "x", [] );
+    }
+    
+    // Allows DependencyGraph to call ReplaceDependees even if y has no dependees
+    [TestMethod]
+    public void ReplaceDependees_EmptyGraph_NoEffect( )
+    {
+        DependencyGraph dg = new();
+        dg.ReplaceDependees( "y", [] );
+    }
+    
+    // Expects DependencyGraph to allow ReplaceDependees to be called even if empty
+    [TestMethod]
+    public void TestEmptyReplaceDependees( )
+    {
+        DependencyGraph dg = new();
+
+        dg.ReplaceDependees( "b", [ "a" ] );
+
+        Assert.AreEqual( 1, dg.Size );
+        Assert.IsTrue( new HashSet<string> { "b" }.SetEquals( dg.GetDependents( "a" ) ) );
+    }
+    
+    // Expects DependencyGraph to allow ReplaceDependents to be called even if empty
+    [TestMethod]
+    public void TestEmptyReplaceDependents( )
+    {
+        DependencyGraph dg = new();
+
+        dg.ReplaceDependents( "b", [ "a" ] );
+
+        Assert.AreEqual( 1, dg.Size );
+        Assert.IsTrue( new HashSet<string> { "a" }.SetEquals( dg.GetDependents( "b" ) ) );
+    }
 
     /// <summary>
     /// Shows that an empty collection is returned when GetDependees is called on a node

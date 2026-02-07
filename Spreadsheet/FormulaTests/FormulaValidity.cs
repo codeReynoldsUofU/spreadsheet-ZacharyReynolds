@@ -26,6 +26,12 @@ public sealed class FormulaValidity
     }
 
     [TestMethod]
+    public void FormulaConstructor_TestSingleTokenSpaces()
+    {
+       Assert.Throws<FormulaFormatException>(() => _ = new Formula(" "));
+    }
+
+    [TestMethod]
     public void FormulaConstructor_TestDoubleOp_Invalid()
     {
         Assert.Throws<FormulaFormatException>(() => _ = new Formula("1++1"));
@@ -147,6 +153,13 @@ public sealed class FormulaValidity
     public void FormulaConstructor_TestLastTokenNumber_Valid()
     {
         _ = new Formula("1");
+    }
+
+    // Expects FormulaFormatException to be thrown because of invalid last token after parathesis
+    [TestMethod]
+    public void FormulaConstructor_TestLastTokenOpeningParenthesis_Valid()
+    {
+       Assert.Throws<FormulaFormatException>(() => _ = new Formula("(1 + 1)("));
     }
 
     // Test that expects a formula exceptions because an operator to end is invalid
