@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DependencyGraphTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a9a5daad80e1de39ade82fc804be3dacb695dc02")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+31c262ba7793e983b014ab4fe90bd41f3ad246bf")]
 [assembly: System.Reflection.AssemblyProductAttribute("DependencyGraphTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DependencyGraphTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

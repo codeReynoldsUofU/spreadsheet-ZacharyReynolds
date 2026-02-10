@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyGraph", "Dependen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyGraphTests", "DependencyGraphTests\DependencyGraphTests.csproj", "{92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spreadsheet", "Spreadsheet\Spreadsheet.csproj", "{AA45FE48-9B7F-4D56-978B-DB0A9DB91636}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsheetTest", "SpreadsheetTest\SpreadsheetTest.csproj", "{9B9A15C2-CF29-4106-B488-DD990B46E4AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92C19A44-8EA9-4D2C-9D21-6FC0CBC2D8ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA45FE48-9B7F-4D56-978B-DB0A9DB91636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA45FE48-9B7F-4D56-978B-DB0A9DB91636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA45FE48-9B7F-4D56-978B-DB0A9DB91636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA45FE48-9B7F-4D56-978B-DB0A9DB91636}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B9A15C2-CF29-4106-B488-DD990B46E4AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B9A15C2-CF29-4106-B488-DD990B46E4AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B9A15C2-CF29-4106-B488-DD990B46E4AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B9A15C2-CF29-4106-B488-DD990B46E4AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
