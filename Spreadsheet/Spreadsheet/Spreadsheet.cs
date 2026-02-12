@@ -6,7 +6,8 @@
 // Update by Profs Kopta and de St. Germain, Fall 2021, Fall 2024
 //     - Updated return types
 //     - Updated documentation
-// Zachary Reynolds
+
+//  Zachary Reynolds
 
 namespace Spreadsheet;
 
@@ -34,7 +35,7 @@ public class InvalidNameException : Exception
 
 /// <summary>
 ///   <para>
-///     An Spreadsheet object represents the state of a simple spreadsheet.  A
+///     A Spreadsheet object represents the state of a simple spreadsheet.  A
 ///     spreadsheet represents an infinite number of named cells.
 ///   </para>
 /// <para>
@@ -42,7 +43,7 @@ public class InvalidNameException : Exception
 ///     more letters followed by one or more numbers, e.g., A5, BC27.
 /// </para>
 /// <para>
-///    Cell names are case insensitive, so "x1" and "X1" are the same cell name.
+///    Cell names are case-insensitive, so "x1" and "X1" are the same cell name.
 ///    Your code should normalize (uppercased) any stored name but accept either.
 /// </para>
 /// <para>
@@ -94,7 +95,7 @@ public class Spreadsheet
     private Dictionary<string, Cell> _cellLookup = new Dictionary<string, Cell>();
 
     /// <summary>
-    ///   Provides a copy of the normalized names of all of the cells in the spreadsheet
+    ///   Provides a copy of the normalized names for all cells in the spreadsheet
     ///   that contain information (i.e., non-empty cells).
     /// </summary>
     /// <returns>
@@ -104,7 +105,7 @@ public class Spreadsheet
     {
         if (_cellLookup.Count == 0)
             throw new InvalidOperationException("All cells are empty");
-        
+
         return new HashSet<string>(_cellLookup.Keys);
     }
 
@@ -147,7 +148,7 @@ public class Spreadsheet
     ///   </para>
     ///   <para>
     ///     The order must correspond to a valid dependency ordering for recomputing
-    ///     all of the cells, i.e., if you re-evaluate each cells in the order of the list,
+    ///     all cells, i.e., if you re-evaluate each cell in the order of the list,
     ///     the overall spreadsheet will be correctly updated.
     ///   </para>
     ///   <para>
@@ -160,7 +161,7 @@ public class Spreadsheet
     {
         if (!IsValidName(name))
             throw new InvalidNameException();
-        
+
         if (!_cellLookup.ContainsKey(name))
         {
             _cellLookup.Add(name, new Cell(number));
@@ -189,7 +190,7 @@ public class Spreadsheet
     {
         if (!IsValidName(name))
             throw new InvalidNameException();
-        
+
         if (!_cellLookup.ContainsKey(name))
         {
             _cellLookup.Add(name, new Cell(text));
@@ -224,7 +225,7 @@ public class Spreadsheet
     {
         if (!IsValidName(name))
             throw new InvalidNameException();
-        
+
         if (!_cellLookup.ContainsKey(name))
         {
             _cellLookup.Add(name, new Cell(formula));
@@ -233,9 +234,9 @@ public class Spreadsheet
         {
             _cellLookup[name].SetContents(formula);
         }
-        
+
         _dg.ReplaceDependees(name, formula.GetVariables());
-        
+
         return GetCellsToRecalculate(name).ToList();
     }
 
@@ -349,14 +350,13 @@ public class Spreadsheet
         string variableRegExPattern = @"[a-zA-Z]+\d+";
         // notice the use of ^ and $ to denote that the entire string being matched is just the variable
         string standaloneVarPattern = $"^{variableRegExPattern}$";
-        
+
         return Regex.IsMatch(name, standaloneVarPattern);
     }
 }
 
 public class Cell
 {
-    private KeyValuePair<object, object> _cell;
     private object _contents;
     private object _value;
 
@@ -370,12 +370,10 @@ public class Cell
         if (_contents is string || _contents is double)
         {
             _value = contents;
-            _cell = new KeyValuePair<object, object>(_contents, _value);
         }
         else if (_contents is Formula f)
         {
             _value = f;
-            _cell = new KeyValuePair<object, object>(_contents, _value);
         }
         else
         {
@@ -398,13 +396,11 @@ public class Cell
         if (contents is string || contents is double)
         {
             _contents = contents;
-            _cell = new KeyValuePair<object, object>(_contents, _contents);
         }
         else if (contents is Formula f)
         {
             _contents = f;
             _value = f;
-            _cell = new KeyValuePair<object, object>(_contents, _value);
         }
     }
 }
