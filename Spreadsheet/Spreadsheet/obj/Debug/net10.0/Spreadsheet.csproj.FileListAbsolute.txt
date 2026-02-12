@@ -1,0 +1,6 @@
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Spreadsheet/obj/Debug/net10.0/Spreadsheet.csproj.AssemblyReference.cache
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Spreadsheet/obj/Debug/net10.0/Spreadsheet.GeneratedMSBuildEditorConfig.editorconfig
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Spreadsheet/obj/Debug/net10.0/Spreadsheet.AssemblyInfoInputs.cache
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Spreadsheet/obj/Debug/net10.0/Spreadsheet.AssemblyInfo.cs
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Spreadsheet/obj/Debug/net10.0/Spreadsheet.csproj.CoreCompileInputs.cache
+/Users/zaqreynolds/Desktop/CS 3500/spreadsheet-ZacharyReynolds/Spreadsheet/Spreadsheet/obj/Debug/net10.0/Spreadsheet.sourcelink.json

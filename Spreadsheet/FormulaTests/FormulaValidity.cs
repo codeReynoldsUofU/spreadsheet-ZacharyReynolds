@@ -358,14 +358,12 @@ public sealed class FormulaValidity
         }
         Assert.IsTrue(f1.Evaluate(TestLookup).Equals(f2));
     }
-}
+
 
 /// <summary>
 /// Test class that only contains tests for the different arithmetic in the Evaluate method.
 /// </summary>
-[TestClass]
-public class EvaluateFormula
-{
+
     /// <summary>
     /// Simple test for addition in the evaluate method. Expects that created cells A1 and B2 are
     /// correctly added.
